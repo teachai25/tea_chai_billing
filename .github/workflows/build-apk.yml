@@ -17,7 +17,7 @@ jobs:
           flutter-version: '3.35.0'
           channel: stable
 
-      - name: Extract source
+      - name: unzip tea_chai_flutter_v2.zip -d source
         run: |
           mkdir source
           unzip tea_chai_flutter_v2.zip -d source
