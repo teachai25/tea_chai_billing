@@ -11,22 +11,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract project
-        run: |
-          unzip tea_chai_flutter_v2.zip -d app
-          find app -maxdepth 3 -name pubspec.yaml
-
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.35.0'
           channel: stable
 
+      - name: Extract source
+        run: |
+          mkdir source
+          unzip tea_chai_flutter_v2.zip -d source
+          SRC=$(dirname "$(find source -name pubspec.yaml -print -quit)")
+          echo "SRC=$SRC" >> $GITHUB_ENV
+
+      - name: Create fresh Android project
+        run: |
+          flutter create --project-name tea_chai_billing app
+          cp -r "$SRC/lib" app/
+          cp "$SRC/pubspec.yaml" app/
+          if [ -d "$SRC/assets" ]; then cp -r "$SRC/assets" app/; fi
+
+      - name: Get dependencies
+        working-directory: app
+        run: flutter pub get
+
       - name: Build APK
         working-directory: app
-        run: |
-          flutter pub get
-          flutter build apk --release
+        run: flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
