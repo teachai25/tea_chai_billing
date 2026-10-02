@@ -20,7 +20,7 @@ jobs:
       - name: Extract source
         run: |
           mkdir source
-          unzip tea_chai_flutter_v2_fixed.zip -d source
+          unzip tea_chai_flutter_v3_fixed.zip -d source
           SRC=$(dirname "$(find source -name pubspec.yaml -print -quit)")
           echo "SRC=$SRC" >> $GITHUB_ENV
 
