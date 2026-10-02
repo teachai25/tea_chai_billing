@@ -17,10 +17,10 @@ jobs:
           flutter-version: '3.35.0'
           channel: stable
 
-      - name: unzip tea_chai_flutter_v2_fixed.zip -d source
+      - name: Extract source
         run: |
           mkdir source
-          unzip tea_chai_flutter_v2.zip -d source
+          unzip tea_chai_flutter_v2_fixed.zip -d source
           SRC=$(dirname "$(find source -name pubspec.yaml -print -quit)")
           echo "SRC=$SRC" >> $GITHUB_ENV
 
